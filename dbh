@@ -3,10 +3,10 @@
 LPWD=$PWD
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-cd $DIR
+cd "$DIR"
 git stash save --keep-index > /dev/null&git stash drop > /dev/null
 git pull > /dev/null
-cd $LPWD
+cd "$LPWD"
 
 #echo -e "\033[92mWelcome\033[0m"
 

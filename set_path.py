@@ -9,9 +9,9 @@ Created on Tue Sep 24 01:39:58 2019
 
 
 from os.path import expanduser
+import os
 
-
-if __name__ == '__main__':
+def add_env():
   home = expanduser("~")
   path = os.path.join(home,".bash_profile")
   script_path = os.path.abspath(__file__)
@@ -26,3 +26,7 @@ if __name__ == '__main__':
         return
   with open(path,'a+') as f:
     f.write('#dbh hook\nexport PATH=$PATH:{}'.format(script_dir))
+
+
+if __name__ == '__main__':
+  add_env()

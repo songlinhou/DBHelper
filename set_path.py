@@ -23,7 +23,7 @@ def add_env():
       lines = f.readlines()
     for line in lines:
       if line.startswith('#dbh hook'):
-        return
+                         return
   with open(path,'a+') as f:
     f.write('#dbh hook\nexport PATH=$PATH:{}'.format(script_dir))
 

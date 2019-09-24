@@ -1,7 +1,7 @@
 #!/bin/bash
 
-cp dbh.py dbh
-cp dbp.py dbp
+#cp dbh.py dbh
+#cp dbp.py dbp
 chmod +x dbh
 chmod +x dbp
 chmod +x set_path.py

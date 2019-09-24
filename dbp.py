@@ -295,7 +295,7 @@ if __name__ == '__main__':
       if len(sys.argv) >= 3:
         bundlefilename = sys.argv[2]
         bundlefilename = bundlefilename.replace("'","")
-        bundlefilename = bundlefilename.replace("\","")
+        bundlefilename = bundlefilename.replace("\\","")
         if not os.path.isfile(bundlefilename):
           print "{}[x]It is not a valid file{}".format(bcolors.FAIL,bcolors.ENDC)
           exit(-1)
@@ -307,7 +307,7 @@ if __name__ == '__main__':
       if len(sys.argv) >= 3:
         bundlefilename = sys.argv[2]
         bundlefilename = bundlefilename.replace("'","")
-        bundlefilename = bundlefilename.replace("\","")
+        bundlefilename = bundlefilename.replace("\\","")
         if not os.path.isfile(bundlefilename):
           print "{}[x]It is not a valid file{}".format(bcolors.FAIL,bcolors.ENDC)
           exit(-1)

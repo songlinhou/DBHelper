@@ -11,5 +11,5 @@ cd $LPWD
 
 #echo -e "\033[92mWelcome\033[0m"
 
-python dbp.py $1 $2 $3 $4
+python "${DIR}/dbp.py" $1 $2 $3 $4
 

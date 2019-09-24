@@ -299,7 +299,10 @@ def create_or_edit_file(filepath=None):
     print "Create/Edit {} Using".format(filepath)
     print "{}[1] Nano (For learners){}".format(bcolors.BOLD,bcolors.ENDC)
     print "{}[2] VIM (For advanced users){}".format(bcolors.BOLD,bcolors.ENDC)
-    choice = raw_input("Choice=")
+    try:
+      choice = int(raw_input("Choice="))
+    except:
+      continue
     if choice == 1:
       toolname = 'nano'
       break

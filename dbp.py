@@ -258,7 +258,7 @@ def upload_to_server(filepath):
   username = user_data['name']
   username = username.strip()
   print "Ready to upload to server"
-  subprocess.call("scp {} {}@ccc.wpi.edu:.".format(filepath,username.lower()),shell=True)
+  subprocess.call("scp '{}' {}@ccc.wpi.edu:.".format(filepath,username.lower()),shell=True)
   
 def remove_temp_files():
   global temp_files
@@ -306,8 +306,11 @@ if __name__ == '__main__':
     elif action == 'upload':
       if len(sys.argv) >= 3:
         bundlefilename = sys.argv[2]
+        #print bundlefilename
         bundlefilename = bundlefilename.replace("'","")
         bundlefilename = bundlefilename.replace("\\","")
+        print bundlefilename
+        print 
         if not os.path.isfile(bundlefilename):
           print "{}[x]It is not a valid file{}".format(bcolors.FAIL,bcolors.ENDC)
           exit(-1)

@@ -275,6 +275,14 @@ def reset_name():
   user_data = {'name':None}
   check_name()
 
+def get_full_filename(argv):
+  full_name = ""
+  parts = sys.argv[2:]
+  for part in parts:
+    full_name = full_name + part
+  full_name = full_name.replace("\\","")
+  return full_name
+
 def show_help():
   print "{}DB Bundler{}".format(bcolors.BOLD,bcolors.ENDC)
   print "Usage:"
@@ -293,9 +301,10 @@ if __name__ == '__main__':
       exit(0)
     elif action == 'run':
       if len(sys.argv) >= 3:
-        bundlefilename = sys.argv[2]
-        bundlefilename = bundlefilename.replace("'","")
-        bundlefilename = bundlefilename.replace("\\","")
+        bundlefilename = get_full_filename(sys.argv)
+        #bundlefilename = sys.argv[2]
+        #bundlefilename = bundlefilename.replace("'","")
+        #bundlefilename = bundlefilename.replace("\\","")
         if not os.path.isfile(bundlefilename):
           print "{}[x]It is not a valid file{}".format(bcolors.FAIL,bcolors.ENDC)
           exit(-1)

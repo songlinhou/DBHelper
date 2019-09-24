@@ -1,5 +1,9 @@
 #!/bin/bash
 
+LPWD=$PWD
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+cd $DIR
 git stash save --keep-index > /dev/null&git stash drop > /dev/null
 git pull > /dev/null
 
@@ -7,3 +11,5 @@ git pull > /dev/null
 
 
 python dbh.py $1 $2 $3 $4
+
+cd $LPWD

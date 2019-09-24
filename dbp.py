@@ -16,6 +16,7 @@ file_name = '.name'
 is_name_newly_created = False
 user_data = {'name':None}
 width = 70
+global_table = None
 
 temp_files = []
 
@@ -138,7 +139,7 @@ def new_db_bundle():
     sqlfile = raw_input("[OPTIONAL] Input the .sql for Table {}:".format(tablename))
     sqlfile = sqlfile.strip()
     sqlfile = sqlfile.replace('\'','')
-    sqlfile = sqlfile.replace('\\,'')
+    sqlfile = sqlfile.replace('\\','')
     if not sqlfile:
       break
     else:
@@ -150,7 +151,7 @@ def new_db_bundle():
     datfile = raw_input("[OPTIONAL] Input the .dat for Table {}:".format(tablename))
     datfile = datfile.strip()
     datfile = datfile.replace('\'','')
-    datfile = datfile.replace('\\,'')
+    datfile = datfile.replace('\\','')
     if not datfile:
       break
     else:
@@ -177,8 +178,8 @@ def load_as_sql(filepath=None):
   while not filepath:
     filepath = raw_input("Input the .sql file name:")
     filepath = filepath.strip()
-    filepath = filepath.replace('\','')
-    filepath = filepath.replace('\\,'')
+    filepath = filepath.replace('\'','')
+    filepath = filepath.replace('\\','')
   if not os.path.exists(filepath):
     print "{}[x] File not exists{}".format(bcolors.FAIL,bcolors.ENDC)
     return
@@ -208,6 +209,7 @@ def load_as_data(filepath=None):
 
 def process_bundle(filename):
   global temp_files
+  global global_table
   try:
     with open(filename) as f:
       data = json.load(f)
@@ -217,6 +219,7 @@ def process_bundle(filename):
   id = 1
   table = data['TABLE']
   table = table.strip()
+  global_table = table
   column = data['COL']
   if 'SQL' in data.keys():
     print '[{}]generate .sql file'.format(id)
@@ -261,7 +264,7 @@ def remove_temp_files():
   global temp_files
   for f in temp_files:
     os.remove(f)
-  log_file = '{}-ctl.log'.format(table)
+  log_file = '{}-ctl.log'.format(global_table)
   if os.path.exists(log_file):
     os.remove(log_file)
 

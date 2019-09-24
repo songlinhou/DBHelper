@@ -1,0 +1,9 @@
+#!/bin/bash
+
+git stash save --keep-index > /dev/null
+git stash drop > /dev/null
+git pull > /dev/null
+
+echo -e "\e[32mWelcome\e[0m"
+
+python dbp.py $1 $2 $3 $4

@@ -278,6 +278,7 @@ def reset_name():
 def get_full_filename(argv):
   full_name = ""
   parts = sys.argv[2:]
+  print "parts=",parts
   for part in parts:
     full_name = full_name + part
   full_name = full_name.replace("\\","")

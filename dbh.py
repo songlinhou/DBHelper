@@ -143,7 +143,7 @@ def index():
   elif choice == 6:
     view_file()
   elif choice == 7:
-
+    create_or_edit_file()
   elif choice == 8:
     reset_name()
   elif choice == 9:

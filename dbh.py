@@ -106,8 +106,9 @@ def main_menu_options():
   options.append( "{}[4]{} Load .sql Script".format(bcolors.OKBLUE,bcolors.ENDC))
   options.append( "{}[5]{} Load .ctl Data Controller".format(bcolors.OKBLUE,bcolors.ENDC))
   options.append( "{}[6]{} View File".format(bcolors.OKBLUE,bcolors.ENDC))
-  options.append( "{}[7]{} Reset Name".format(bcolors.OKBLUE,bcolors.ENDC))
-  options.append( "{}[8]{} Exit".format(bcolors.OKBLUE,bcolors.ENDC))
+  options.append( "{}[7]{} Create/Edit File".format(bcolors.OKBLUE,bcolors.ENDC))
+  options.append( "{}[8]{} Reset Name".format(bcolors.OKBLUE,bcolors.ENDC))
+  options.append( "{}[9]{} Exit".format(bcolors.OKBLUE,bcolors.ENDC))
   
   for option in options:
     print option
@@ -142,8 +143,10 @@ def index():
   elif choice == 6:
     view_file()
   elif choice == 7:
-    reset_name()
+
   elif choice == 8:
+    reset_name()
+  elif choice == 9:
     exit_app()
       
 def init_db():
@@ -287,6 +290,25 @@ def load_as_data(filepath=None):
   print cmd
   subprocess.call(cmd,shell=True)
   
+def create_or_edit_file(filepath=None):
+  toolname = ""
+  while not filepath:
+    filepath = raw_input("{}Input the file name:{}".format(bcolors.BOLD,bcolors.ENDC))
+    filepath = filepath.strip()
+  while True:
+    print "Create/Edit {} Using".format(filepath)
+    print "{}[1] Nano (For learners){}".format(bcolors.BOLD,bcolors.ENDC))
+    print "{}[2] VIM (For advanced users){}".format(bcolors.BOLD,bcolors.ENDC))
+    choice = raw_input("Choice=")
+    if choice == 1:
+      toolname = 'nano'
+      break
+    elif choice == 2:
+      toolname = 'vim'
+      break
+  cmd = "{} {}".format(toolname,filepath)
+  subprocess.call(cmd,shell=True)
+
 def view_file(filepath=None):
   while not filepath:
     filepath = raw_input("{}Input the file name:{}".format(bcolors.BOLD,bcolors.ENDC))
@@ -294,7 +316,7 @@ def view_file(filepath=None):
   if not os.path.exists(filepath):
     print "{}[x] File not exists{}".format(bcolors.FAIL,bcolors.ENDC)
     return
-  cmd = "nano " + filepath
+  cmd = "less " + filepath
   subprocess.call(cmd,shell=True)
 
 

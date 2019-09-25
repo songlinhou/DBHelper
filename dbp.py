@@ -138,7 +138,7 @@ def new_db_bundle():
   while True:
     sqlfile = raw_input("[OPTIONAL] Input the .sql for Table {}:".format(tablename))
     sqlfile = sqlfile.strip()
-    sqlfile = sqlfile.replace('\'','')
+    #sqlfile = sqlfile.replace('\'','')
     sqlfile = sqlfile.replace('\\','')
     if not sqlfile:
       break
@@ -150,7 +150,7 @@ def new_db_bundle():
   while True:
     datfile = raw_input("[OPTIONAL] Input the .dat for Table {}:".format(tablename))
     datfile = datfile.strip()
-    datfile = datfile.replace('\'','')
+    #datfile = datfile.replace('\'','')
     datfile = datfile.replace('\\','')
     if not datfile:
       break
@@ -178,7 +178,7 @@ def load_as_sql(filepath=None):
   while not filepath:
     filepath = raw_input("Input the .sql file name:")
     filepath = filepath.strip()
-    filepath = filepath.replace('\'','')
+    #filepath = filepath.replace('\'','')
     filepath = filepath.replace('\\','')
   if not os.path.exists(filepath):
     print "{}[x] File not exists{}".format(bcolors.FAIL,bcolors.ENDC)

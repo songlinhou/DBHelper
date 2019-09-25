@@ -10,6 +10,7 @@ import os
 import json
 import sys
 import subprocess
+import dbp
 
 
 
@@ -108,7 +109,11 @@ def main_menu_options():
   options.append( "{}[6]{} View File".format(bcolors.OKBLUE,bcolors.ENDC))
   options.append( "{}[7]{} Create/Edit File".format(bcolors.OKBLUE,bcolors.ENDC))
   options.append( "{}[8]{} Reset Name".format(bcolors.OKBLUE,bcolors.ENDC))
-  options.append( "{}[9]{} File Transfer".format(bcolors.OKBLUE,bcolors.ENDC))
+
+  if "SSH_CONNECTION" in os.environ:
+    options.append( "{}[9]{} Get Remote Aceess Path".format(bcolors.OKBLUE,bcolors.ENDC))
+  else:
+    options.append( "{}[9]{} File Transfer".format(bcolors.OKBLUE,bcolors.ENDC))
   options.append( "{}[0]{} Exit".format(bcolors.OKBLUE,bcolors.ENDC))
   
   for option in options:
@@ -326,9 +331,26 @@ def view_file(filepath=None):
   subprocess.call(cmd,shell=True)
 
 
+def get_remote_path():
+  while True:
+    file_path = raw_input("Input the path:")
+    file_path = file_path.strip()
+    if not file_path:
+      print "{}Path shouldn't be empty{}".format(bcolors.FAIL,bcolors.ENDC)
+      continue
+    elif not os.path.exists(file_path):
+      print "{}Path doesn't exist{}".format(bcolors.FAIL,bcolors.ENDC)
+      continue
+    else:
+      ab_path = os.path.abspath(file_path)
+      print "The remote accessing path is:"
+      print "{}{}{}".format(bcolors.OKBLUE,ab_path,bcolors.ENDC)
+      return
+
 def file_transfer():
   if "SSH_CONNECTION" in os.environ:
-    print "{}You are using the remote host. Please use this function in your localhost only.{}".format(bcolors.FAIL,bcolors.ENDC)
+    #print "{}You are using the remote host. Please use this function in your localhost only.{}".format(bcolors.FAIL,bcolors.ENDC)
+    get_remote_path()
     return
 
   while True:
@@ -341,6 +363,30 @@ def file_transfer():
       continue
     if choice == 1 or choice == 2:
       break
+  if choice == 1:
+    while True:
+      filepath = raw_input("Input the local path of your file or folder:")
+      filepath = filepath.strip()
+      if not filepath:
+        print "{}Path cannot be empty{}".format(bcolors.FAIL,bcolors.ENDC)
+        continue
+      elif not os.path.exists(filepath):
+        print "{}Path doesn't exist{}".format(bcolors.FAIL,bcolors.ENDC)
+        continue
+      else:
+        break
+    dbp.upload_to_server(filepath)
+  elif choice == 2:
+    while True:
+      print "{}Operation may fail if the remote path is not correct{}".format(bcolors.WARNING,bcolors.ENDC)
+      filepath = raw_input("Input the remote path of your file or folder:")
+      filepath = filepath.strip()
+      if not filepath:
+        print "{}Path cannot be empty{}".format(bcolors.FAIL,bcolors.ENDC)
+        continue
+      else:
+        break
+    dbp.downlaod_from_server(filepath)
   
 
 

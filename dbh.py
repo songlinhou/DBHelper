@@ -413,34 +413,36 @@ init_callbacks()
 
 if len(sys.argv) > 1:
   command = sys.argv[1]
+  fast_access = False
   try:
     num = int(command.strip())
     method = callbacks[num]
     method()
-    exit(0)
+    fast_access = True
   except:
-    pass
-  if command.lower() == 'help':
-    help_info()
-  elif command.lower() == 'db':
-    check_name()
-    init_db()
-  elif command.lower() == 'load':
-    check_name()
-    if len(sys.argv) >= 3:
-      path = sys.argv[2]
-      load_file(path)
+    fast_access = False
+  if not fast_access:
+    if command.lower() == 'help':
+      help_info()
+    elif command.lower() == 'db':
+      check_name()
+      init_db()
+    elif command.lower() == 'load':
+      check_name()
+      if len(sys.argv) >= 3:
+        path = sys.argv[2]
+        load_file(path)
+      else:
+        print "{}[x] Please provide the location of the file.{}".format(bcolors.FAIL,bcolors.ENDC)
+    elif command.lower() == 'view':
+      check_name()
+      if len(sys.argv) >= 3:
+        path = sys.argv[2]
+        view_file(path)
+      else:
+        print "{}[x] Please provide the location of the file.{}".format(bcolors.FAIL,bcolors.ENDC)
     else:
-      print "{}[x] Please provide the location of the file.{}".format(bcolors.FAIL,bcolors.ENDC)
-  elif command.lower() == 'view':
-    check_name()
-    if len(sys.argv) >= 3:
-      path = sys.argv[2]
-      view_file(path)
-    else:
-      print "{}[x] Please provide the location of the file.{}".format(bcolors.FAIL,bcolors.ENDC)
-  else:
-    help_info()
+      help_info()
     
 else:
   index()

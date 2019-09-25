@@ -182,7 +182,7 @@ def load_file(filepath=None):
 
 def create_sql():
   print "{}visit the following link{}".format(bcolors.BOLD,bcolors.ENDC)
-  print "{}https://www.freeformatter.com/sql-formatter.html{}".format(bcolors.UNDERLINE,bcolors.ENDC)
+  print "{}https://www.tutorialspoint.com/oracle_terminal_online.php{}".format(bcolors.UNDERLINE,bcolors.ENDC)
   while True:
     ans = raw_input('{}Do you need to open the editor now(Y/N)? {}'.format(bcolors.OKGREEN,bcolors.ENDC))
     if ans.strip().lower() == 'y':

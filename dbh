@@ -1,7 +1,7 @@
 #!/bin/bash
 
 LPWD=$PWD
-
+echo "Start Auto Update Process"
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 cd "$DIR"
 git add * > /dev/null 2>&1
@@ -10,6 +10,7 @@ git pull > /dev/null 2>&1
 #git stash save --keep-index > /dev/null 2>&1
 #git stash drop > /dev/null 2>&1
 #git pull > /dev/null 2>&1
+echo "clear"
 cd "$LPWD"
 
 #echo -e "\033[92mWelcome\033[0m"

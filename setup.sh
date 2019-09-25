@@ -4,7 +4,7 @@
 #cp dbp.py dbp
 chmod +x dbh
 chmod +x dbp
-chmod +x set_path.py
+#chmod +x set_path.py
 #python set_path.py # set path
 
 if command -v python &>/dev/null; then

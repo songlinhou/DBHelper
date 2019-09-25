@@ -257,8 +257,30 @@ def upload_to_server(filepath):
   check_name()
   username = user_data['name']
   username = username.strip()
+  if "SSH_CONNECTION" in os.environ:
+    print "{}You are using the remote host. Please use this function in your localhost only.{}".format(bcolors.FAIL,bcolors.ENDC)
+    return
   print "Ready to upload to server"
-  subprocess.call("scp '{}' {}@ccc.wpi.edu:.".format(filepath,username.lower()),shell=True)
+  if not os.path.exists(filepath):
+    print "{}[x]{} doesn't exist{}".format(bcolors.FAIL,bundlefilename,bcolors.ENDC)
+    return
+  if os.path.isfile(filepath):
+    subprocess.call("scp '{}' {}@ccc.wpi.edu:.".format(filepath,username.lower()),shell=True)
+  elif os.path.isdir(filepath):
+    subprocess.call("scp -r '{}' {}@ccc.wpi.edu:.".format(filepath,username.lower()),shell=True)
+  else:
+    print "{}File {} not supported.{}".format(bcolors.FAIL,filepath,bcolors.ENDC)
+
+def downlaod_from_server(filepath):
+  check_name()
+  username = user_data['name']
+  username = username.strip()
+  if "SSH_CONNECTION" in os.environ:
+    print "{}You are using the remote host. Please use this function in your localhost only.{}".format(bcolors.FAIL,bcolors.ENDC)
+    return
+  print "Ready to download from server"
+  subprocess.call("scp -r '{}@ccc.wpi.edu:{}' .".format(username.lower(),filepath),shell=True)
+
   
 def remove_temp_files():
   global temp_files
@@ -321,11 +343,22 @@ if __name__ == '__main__':
         bundlefilename = bundlefilename.replace("\\","")
         print bundlefilename
         print 
-        if not os.path.isfile(bundlefilename):
-          print "{}[x]It is not a valid file{}".format(bcolors.FAIL,bcolors.ENDC)
+        if not os.path.exists(bundlefilename):
+          print "{}[x]{} doesn't exist{}".format(bcolors.FAIL,bundlefilename,bcolors.ENDC)
           exit(-1)
         else:
           upload_to_server(bundlefilename)
+    elif action == 'download':
+      if len(sys.argv) >= 3:
+        bundlefilename = sys.argv[2]
+        bundlefilename = bundlefilename.strip()
+        #print bundlefilename
+        if not bundlefilename:
+          print "{}Name mustn't be empty.{}".format(bcolors.FAIL,bcolors.ENDC)
+          exit(-1)
+        print "{}Preparing to download {} from the server.{}".format(bcolors.OKBLUE,bundlefilename,bcolors.ENDC)
+        print 
+        upload_to_server(bundlefilename)   
     else:
       show_help()
   

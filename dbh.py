@@ -108,7 +108,8 @@ def main_menu_options():
   options.append( "{}[6]{} View File".format(bcolors.OKBLUE,bcolors.ENDC))
   options.append( "{}[7]{} Create/Edit File".format(bcolors.OKBLUE,bcolors.ENDC))
   options.append( "{}[8]{} Reset Name".format(bcolors.OKBLUE,bcolors.ENDC))
-  options.append( "{}[9]{} Exit".format(bcolors.OKBLUE,bcolors.ENDC))
+  options.append( "{}[9]{} File Transfer".format(bcolors.OKBLUE,bcolors.ENDC))
+  options.append( "{}[0]{} Exit".format(bcolors.OKBLUE,bcolors.ENDC))
   
   for option in options:
     print option
@@ -124,9 +125,9 @@ def index():
   choice = None
   while True:
     try:
-      choice = int(raw_input('{}Input your choice (1-{}):{}'.format(bcolors.BOLD,opt_len,bcolors.ENDC)))
-      if 1 <= choice <= opt_len:
-        break;
+      choice = int(raw_input('{}Input your choice (0-{}):{}'.format(bcolors.BOLD,opt_len-1,bcolors.ENDC)))
+      if 0 <= choice <= opt_len-1:
+        break
     except:
       choice = None
   
@@ -147,6 +148,8 @@ def index():
   elif choice == 8:
     reset_name()
   elif choice == 9:
+
+  elif choice == 0:
     exit_app()
       
 def init_db():
@@ -321,6 +324,24 @@ def view_file(filepath=None):
     return
   cmd = "less " + filepath
   subprocess.call(cmd,shell=True)
+
+
+def file_transfer():
+  if "SSH_CONNECTION" in os.environ:
+    print "{}You are using the remote host. Please use this function in your localhost only.{}".format(bcolors.FAIL,bcolors.ENDC)
+    return
+
+  while True:
+    print "Please choose your operation:"
+    print "{}[1] Upload files to Campus Server{}".format(bcolors.HEADER,bcolors.ENDC)
+    print "{}[2] Download files from Campus Server{}".format(bcolors.HEADER,bcolors.ENDC)
+    try:
+      choice = int(raw_input("Choice="))
+    except:
+      continue
+    if choice == 1 or choice == 2:
+      break
+  
 
 
 setup_path()

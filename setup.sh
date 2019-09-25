@@ -5,7 +5,7 @@
 chmod +x dbh
 chmod +x dbp
 chmod +x set_path.py
-python set_path.py # set path
+#python set_path.py # set path
 
 if command -v python &>/dev/null; then
     echo "python is installed"
@@ -24,7 +24,8 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 if [ -f "~/.bash_profile" ]; then
 	source ~/.bash_profile	
 else
-	echo "#dbh hook\nexport PATH=$PATH:${DIR}" >> ~/.bash_profile
+	echo "#dbh hook" >> ~/.bash_profile
+    echo "export PATH=\"\$PATH:${DIR}\"" >> ~/.bash_profile
 	source ~/.bash_profile
 fi
 

@@ -76,6 +76,7 @@ def setup_path():
   with open(path,'a+') as f:
     f.write('#dbh hook\nexport PATH=$PATH:{}'.format(script_dir))
   
+  
 
 def show_title():
   global width

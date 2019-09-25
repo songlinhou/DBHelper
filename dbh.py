@@ -18,7 +18,7 @@ file_name = '.name'
 is_name_newly_created = False
 user_data = {'name':None}
 width = 70
-
+callbacks = []
 
 class bcolors:
     HEADER = '\033[95m'
@@ -121,7 +121,24 @@ def main_menu_options():
     print option
   return len(options)
   
-  
+def init_callbacks():
+  global callbacks
+
+  # 0 - 4
+  callbacks.append(exit_app)
+  callbacks.append(init_db)
+  callbacks.append(create_sql)
+  callbacks.append(create_ctl_file)
+  callbacks.append(load_as_sql)
+
+  # 5 - 9
+  callbacks.append(load_as_data)
+  callbacks.append(view_file)
+  callbacks.append(create_or_edit_file)
+  callbacks.append(reset_name)
+  callbacks.append(file_transfer)
+
+
 def index():
   show_title()
   print "\nCurrent Path"
@@ -392,9 +409,17 @@ def file_transfer():
 
 
 setup_path()
+init_callbacks()
 
 if len(sys.argv) > 1:
   command = sys.argv[1]
+  try:
+    num = int(command.strip())
+    method = callbacks[num]
+    method()
+    exit(0)
+  except:
+    pass
   if command.lower() == 'help':
     help_info()
   elif command.lower() == 'db':

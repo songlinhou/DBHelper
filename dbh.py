@@ -153,7 +153,7 @@ def index():
   elif choice == 8:
     reset_name()
   elif choice == 9:
-
+    file_transfer()
   elif choice == 0:
     exit_app()
       

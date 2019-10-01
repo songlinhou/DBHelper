@@ -81,7 +81,9 @@ def setup_path():
 def show_title():
   global width
   try:
-    version = subprocess.check_output('git rev-list --all --count',shell=True)
+    script_path = os.path.abspath(__file__)
+    script_dir = os.path.dirname(script_path)
+    version = subprocess.check_output('cd \'{}\';git rev-list --all --count'.format(script_dir),shell=True)
     version = version.strip()
     version = int(version)
     version = version / 10.0

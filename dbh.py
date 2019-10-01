@@ -80,11 +80,19 @@ def setup_path():
 
 def show_title():
   global width
+  try:
+    version = subprocess.check_output('git rev-list --all --count',shell=True)
+    version = version.strip()
+    version = int(version)
+    version = version / 10.0
+    
+  except:
+    version = '---'
   line1 = "#" * width
   line2 = "## {}DB Helper{}".format(bcolors.BOLD,bcolors.ENDC)
   line2_ = (width - len(line2) - 2 + 8) * ' ' + "##"
   line2 = line2 + line2_
-  version = "Version: 1.0"
+  version = "Version: {}".format(version)
   line3 = "##" + (width - 2 - 3 - len(version)) * ' ' + version + " ##"
   author = "Author: {}Ray{}".format(bcolors.OKBLUE,bcolors.ENDC)
   line4 = "##" + (width - 2 - 3 - len(author) + 9) * ' ' + author + " ##"
@@ -141,8 +149,9 @@ def init_callbacks():
 
 def index():
   show_title()
-  print "\nCurrent Path"
-  print "Menu\\"
+  print "\nCurrent Path: \n{}".format(os.getcwd())
+  print "-" * width
+  #print "Menu\\"
   opt_len = main_menu_options()
   print "-" * width
   choice = None
@@ -192,6 +201,8 @@ def help_info():
   
 def load_file(filepath=None):
   check_name()
+  subprocess.call("ls",shell=True)
+  
   while not filepath:
     filepath = raw_input("{}Input the file name:{}".format(bcolors.BOLD,bcolors.ENDC))
     filepath = filepath.strip()
@@ -287,6 +298,9 @@ def generateCTLContent(datname,tablename,columns,sep=','):
 def load_as_sql(filepath=None):
   #echo exit | sqlplus ${username}@CS/${username^^} @createTables
   check_name()
+  print "-" * width
+  subprocess.call('ls',shell=True)
+  print "-" * width
   while not filepath:
     filepath = raw_input("Input the .sql file name:")
     filepath = filepath.strip()
@@ -305,6 +319,9 @@ def load_as_sql(filepath=None):
 def load_as_data(filepath=None):
   #sqlldr ${username}@CS/${username^^} control=loadHW3-emp.ctl
   check_name()
+  print "-" * width
+  subprocess.call('ls',shell=True)
+  print "-" * width
   while not filepath:
     filepath = raw_input("{}Input the .ctl file name:{}".format(bcolors.BOLD,bcolors.ENDC))
     filepath = filepath.strip()
@@ -319,7 +336,10 @@ def load_as_data(filepath=None):
 def create_or_edit_file(filepath=None):
   toolname = ""
   while not filepath:
+    subprocess.call('ls',shell=True)
+    print "-" * width
     filepath = raw_input("{}Input the file name:{}".format(bcolors.BOLD,bcolors.ENDC))
+    print "-" * width
     filepath = filepath.strip()
   while True:
     print "Create/Edit {} Using".format(filepath)
@@ -340,7 +360,11 @@ def create_or_edit_file(filepath=None):
 
 def view_file(filepath=None):
   while not filepath:
-    filepath = raw_input("{}Input the file name:{}".format(bcolors.BOLD,bcolors.ENDC))
+    print "-" * width
+    subprocess.call('ls',shell=True)
+    print "-" * width
+    filepath = raw_input("{}Input the file name to view:{}".format(bcolors.BOLD,bcolors.ENDC))
+    print "-" * width
     filepath = filepath.strip()
   if not os.path.exists(filepath):
     print "{}[x] File not exists{}".format(bcolors.FAIL,bcolors.ENDC)
@@ -383,7 +407,11 @@ def file_transfer():
       break
   if choice == 1:
     while True:
+      print "-" * width
+      subprocess.call('ls',shell=True)
+      print "-" * width
       filepath = raw_input("Input the local path of your file or folder:")
+      print "-" * width
       filepath = filepath.strip()
       if not filepath:
         print "{}Path cannot be empty{}".format(bcolors.FAIL,bcolors.ENDC)
